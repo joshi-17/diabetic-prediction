@@ -146,10 +146,14 @@ footer p {
 
                     <button type="submit">Predict</button>
                 </form>
-                <p id="prediction"></p>
-                {% if prediction %}
-                    <h2>Prediction: {{ prediction }}</h2>
-                {% endif %}
+               <div id="prediction-container" style="text-align: center; margin: 20px;">
+    {% if prediction %}
+        <h2 style="color: #4CAF50;">Prediction: {{ prediction }}</h2>
+    {% else %}
+        <h2 style="color: #f44336;">No prediction available. Please try again.</h2>
+    {% endif %}
+</div>
+
             </section>
         </main>
         <footer>
