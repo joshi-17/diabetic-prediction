@@ -117,34 +117,36 @@
         <main>
             <section class="form-container">
                 <h2>Diabetes Checking: Essential Tests and Guidelines for Your Health</h2>
-                <form action="/predict" method="post" onsubmit="return handleSubmit(event);">
+                <form action="/predict" method="post">
                     <label for="Pregnancies">Pregnancies:</label>
-                    <input type="number" id="Pregnancies" name="Pregnancies" step="0.001">
+                    <input type="number" id="Pregnancies" name="Pregnancies" step="0.001" required>
 
                     <label for="Glucose">Glucose:</label>
-                    <input type="number" id="Glucose" name="Glucose" step="0.001">
+                    <input type="number" id="Glucose" name="Glucose" step="0.001" required>
 
                     <label for="BloodPressure">Blood Pressure:</label>
-                    <input type="number" id="BloodPressure" name="BloodPressure" step="0.001">
+                    <input type="number" id="BloodPressure" name="BloodPressure" step="0.001" required>
 
                     <label for="SkinThickness">Skin Thickness:</label>
-                    <input type="number" id="SkinThickness" name="SkinThickness" step="0.001">
+                    <input type="number" id="SkinThickness" name="SkinThickness" step="0.001" required>
 
                     <label for="Insulin">Insulin:</label>
-                    <input type="number" id="Insulin" name="Insulin" step="0.001">
+                    <input type="number" id="Insulin" name="Insulin" step="0.001" required>
 
                     <label for="BMI">BMI:</label>
-                    <input type="number" id="BMI" name="BMI" step="0.001">
+                    <input type="number" id="BMI" name="BMI" step="0.001" required>
 
                     <label for="DiabetesPedigreeFunction">Diabetes Pedigree Function:</label>
-                    <input type="number" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" step="0.001">
+                    <input type="number" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" step="0.001" required>
 
                     <label for="Age">Age:</label>
-                    <input type="number" id="Age" name="Age" step="0.001">
+                    <input type="number" id="Age" name="Age" step="0.001" required>
 
                     <button type="submit">Predict</button>
                 </form>
-                <p id="prediction"></p>
+                {% if prediction %}
+                    <h2>Prediction: {{ prediction }}</h2>
+                {% endif %}
             </section>
         </main>
         <footer>
@@ -157,13 +159,5 @@
             </div>
         </footer>
     </div>
-    <script>
-        function handleSubmit(event) {
-            event.preventDefault();
-            const predictionElement = document.getElementById('prediction');
-            // Add logic to gather form data and make a prediction here.
-            predictionElement.innerText = 'Prediction: (your prediction logic here)';
-        }
-    </script>
 </body>
 </html>
