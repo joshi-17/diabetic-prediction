@@ -158,12 +158,35 @@
         </footer>
     </div>
     <script>
-        function handleSubmit(event) {
-            event.preventDefault();
-            const predictionElement = document.getElementById('prediction');
-            // Add logic to gather form data and make a prediction here.
-            predictionElement.innerText = 'Prediction: (your prediction logic here)';
-        }
+        <script>
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevent the form from submitting the traditional way
+        const predictionElement = document.getElementById('prediction');
+
+        // Gather form data
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+
+        // Send a POST request to the Flask backend
+        fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(result => {
+            // Display the prediction result
+            predictionElement.innerText = `Prediction: ${result.prediction}`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            predictionElement.innerText = 'Error making prediction';
+        });
+    }
+</script>
+
     </script>
 </body>
 </html>
