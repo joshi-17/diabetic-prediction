@@ -22,25 +22,19 @@ model.fit(X_train, y_train)
 # Save the model
 joblib.dump(model, 'diabetes_model.pkl')
 
-@app.route('/')
-def home():
-    return render_template('index.html', prediction=None)
-
 @app.route('/predict', methods=['POST'])
 def predict():
     # Get user input
-    features = [float(request.form['Pregnancies']),
-                float(request.form['Glucose']),
-                float(request.form['BloodPressure']),
-                float(request.form['SkinThickness']),
-                float(request.form['Insulin']),
-                float(request.form['BMI']),
-                float(request.form['DiabetesPedigreeFunction']),
-                float(request.form['Age'])]
+    features = [float(request.json['Pregnancies']),
+                float(request.json['Glucose']),
+                float(request.json['BloodPressure']),
+                float(request.json['SkinThickness']),
+                float(request.json['Insulin']),
+                float(request.json['BMI']),
+                float(request.json['DiabetesPedigreeFunction']),
+                float(request.json['Age'])]
     
     prediction = model.predict([features])
     result = 'Diabetic' if prediction[0] == 1 else 'Not Diabetic'
-    return render_template('index.html', prediction=result)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    return jsonify({'prediction': result})  # Return JSON response
