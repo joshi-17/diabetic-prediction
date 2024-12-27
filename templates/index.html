@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Care</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            text-align: center;
+            background-color: #4CAF50;
+            padding: 20px;
+            color: white;
+            width: 100%;
+        }
+
+        header nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-container label {
+            margin-top: 10px;
+        }
+
+        .form-container input {
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-container button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer img {
+            width: 100px;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        .social-media a {
+            margin: 0 10px;
+        }
+
+        .social-media img {
+            width: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Health Care</h1>
+            <nav>
+                <a href="https://www.healthline.com/health/difference-between-type-1-and-type-2-diabetes" target="_blank">Understanding Diabetes Types</a>
+                <a href="https://www.mayoclinic.org/diseases-conditions/diabetes/symptoms-causes/syc-20371444" target="_blank">Symptoms</a>
+                <a href="https://www.niddk.nih.gov/health-information/diabetes/overview/managing-diabetes" target="_blank">Managing Diabetes</a>
+            </nav>
+        </header>
+        <main>
+            <section class="form-container">
+                <h2>Diabetes Prediction</h2>
+                <form onsubmit="return handleSubmit(event);">
+                    <label for="Pregnancies">Pregnancies:</label>
+                    <input type="number" id="Pregnancies" name="Pregnancies" step="0.001">
+
+                    <label for="Glucose">Glucose:</label>
+                    <input type="number" id="Glucose" name="Glucose" step="0.001">
+
+                    <label for="BloodPressure">Blood Pressure:</label>
+                    <input type="number" id="BloodPressure" name="BloodPressure" step="0.001">
+
+                    <label for="SkinThickness">Skin Thickness:</label>
+                    <input type="number" id="SkinThickness" name="SkinThickness" step="0.001">
+
+                    <label for="Insulin">Insulin:</label>
+                    <input type="number" id="Insulin" name="Insulin" step="0.001">
+
+                    <label for="BMI">BMI:</label>
+                    <input type="number" id="BMI" name="BMI" step="0.001">
+
+                    <label for="DiabetesPedigreeFunction">Diabetes Pedigree Function:</label>
+                    <input type="number" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" step="0.001">
+
+                    <label for="Age">Age:</label>
+                    <input type="number" id="Age" name="Age" step="0.001">
+
+                    <button type="submit">Predict</button>
+                </form>
+                <p id="prediction"></p>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 Diabetes Prediction</p>
+            <div class="social-media">
+                <a href="https://www.facebook.com/DeDiabetesIndia/"><img src="https://cdn-icons-png.freepik.com/256/15707/15707884.png" alt="Facebook"></a>
+                <a href="https://x.com/wdd"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/x-social-media-logo-icon.png" alt="Twitter"></a>
+                <a href="https://www.instagram.com/intdiabetesfed/?hl=en"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+                <a href="https://www.linkedin.com/company/diabetes-india/?originalSubdomain=in"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+            </div>
+        </footer>
+    </div>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            const predictionElement = document.getElementById('prediction');
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                predictionElement.innerText = `Prediction: ${result.prediction}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                predictionElement.innerText = 'Error making prediction';
+            });
+        }
+    </script>
+</body>
+</html>
